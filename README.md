@@ -1,43 +1,36 @@
 # Linux Platform Engineering
 
-A hands-on Linux engineering portfolio built around a reproducible KVM lab.
-Focus: **RHCSA → RHCE certification** and **DevSecOps** practices.
+A home lab I'm building to prepare the **Red Hat RHCSA (EX200)** and to practise
+Linux engineering the way it's done in production: automated, documented,
+reproducible.
 
-## Goals
+This repository is the entry point. It holds the lab architecture and tracks
+progress. Work is committed as I go — including the parts that didn't work the
+first time.
 
-- Prepare and pass the Red Hat **RHCSA (EX200)**, then **RHCE**.
-- Build a fully reproducible Linux lab — infrastructure as documentation.
-- Demonstrate **DevSecOps** fundamentals: automation, hardening, secret hygiene.
+## Why this lab
 
-## Lab
+I have a background in industrial IT, OT infrastructure and cybersecurity. This
+lab is where I turn that experience into demonstrable Linux platform skills:
+KVM virtualization, unattended provisioning, host hardening, and the habit of
+recording decisions rather than just commands.
 
-A single KVM host runs an isolated virtual lab. One RHEL 9 golden image is
-cloned into a small set of practice nodes. See [ARCHITECTURE.md](ARCHITECTURE.md).
+## What exists today
 
-## Repositories
-
-| Repo | Purpose |
+| | |
 | --- | --- |
-| **linux-platform-engineering** | This portal — architecture, roadmap, links |
-| **rhel-golden-image** | RHEL 9 reference image (RHCSA base), built with Kickstart |
-| **linux-lab** | KVM lab — linked cloning, local repo node, storage, network |
-| **hypervisor-hardening** | Ubuntu host hardening (CIS / ANSSI) |
+| **KVM host** | Ubuntu Server 24.04 LTS on a NUC-class mini-PC. KVM/QEMU/libvirt stack up; NAT network and storage pool operational. |
+| **Storage** | Local SSD for VM disks; NAS for installation media and backups, mounted on demand via `systemd.automount`. |
+| **In progress** | RHEL 9 golden image, built unattended with Kickstart, to be cloned into a small RHCSA topology. |
 
-All repositories share the `linux-platform-engineering` topic. The same pattern
-(a portal plus focused repositories) can seed other programs.
-
-## Skills demonstrated
-
-- **RHCSA** — users & permissions, LVM, XFS, systemd, SELinux, firewalld,
-  containers (Podman), scheduled tasks, storage management.
-- **DevSecOps** — Kickstart automation, Bash tooling, host hardening,
-  reproducible builds, keeping secrets out of version control.
+Details in [ARCHITECTURE.md](ARCHITECTURE.md) · progress in [ROADMAP.md](ROADMAP.md).
 
 ## Conventions
 
-Public repositories never expose real hostnames, addresses or secrets — such
-values are always generalized (e.g. `the KVM host`, `192.0.2.x`).
+- Public repository: real hostnames, addresses and secrets are never committed —
+  values are generalized (`the KVM host`, `192.0.2.x`).
+- Documentation in English; decisions recorded, not just outcomes.
 
----
+## License
 
-[github.com/lxrider](https://github.com/lxrider)
+[MIT](LICENSE) — © 2026 lxrider
