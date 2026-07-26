@@ -11,9 +11,8 @@ first time.
 ## Why this lab
 
 I have a background in industrial IT, OT infrastructure and cybersecurity. This
-lab is where I turn that experience into demonstrable Linux platform skills:
-KVM virtualization, unattended provisioning, host hardening, and the habit of
-recording decisions rather than just commands.
+lab is where I turn that experience into demonstrable Linux platform skills such as
+KVM virtualization, unattended provisioning, host hardening, etc.
 
 ## What exists today
 
@@ -29,7 +28,7 @@ Details in [ARCHITECTURE.md](ARCHITECTURE.md) · progress in [ROADMAP.md](ROADMA
 
 - Public repository: real hostnames, addresses and secrets are never committed —
   values are generalized (`the KVM host`, `192.0.2.x`).
-- Documentation in English; decisions recorded, not just outcomes.
+- Documentation in English.
 
 ## License
 
