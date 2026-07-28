@@ -20,7 +20,8 @@ KVM virtualization, unattended provisioning, host hardening, etc.
 | --- | --- |
 | **KVM host** | Ubuntu Server 24.04 LTS on a NUC-class mini-PC. KVM/QEMU/libvirt stack up; NAT network and storage pool operational. |
 | **Storage** | Local SSD for VM disks; NAS for installation media and backups, mounted on demand via `systemd.automount`. |
-| **In progress** | RHEL 9 golden image, built unattended with Kickstart, to be cloned into a small RHCSA topology. |
+| **Golden image** | RHEL 9 reference image built unattended with Kickstart, sealed with `virt-sysprep`, [published as a repo](https://github.com/lxrider/rhel-golden-image). |
+| **In progress** | Cloning the golden image into the RHCSA topology (`linux-lab`). |
 
 Details in [ARCHITECTURE.md](ARCHITECTURE.md) · progress in [ROADMAP.md](ROADMAP.md).
 
