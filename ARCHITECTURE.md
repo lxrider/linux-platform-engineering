@@ -1,49 +1,94 @@
-# Lab Architecture
+# Architecture
 
-A single physical host acts as a KVM hypervisor for an isolated virtual lab
-dedicated to RHCSA/RHCE practice.
+The lab runs on a single physical KVM host and is intentionally kept small.
+
+The goal is to have an environment that is easy to understand, break, rebuild
+and progressively automate.
 
 ## Host
 
-A small-form-factor x86 mini-PC (NUC-class): a quad-core CPU with hardware
-virtualization, 16 GB of RAM and a local SSD. It runs Ubuntu Server 24.04 LTS
-and serves as both hypervisor and administration point. A wired network
-connection is assumed.
+A small x86 mini-PC with:
+
+- quad-core CPU with hardware virtualization
+- 16 GB RAM
+- local SSD
+- wired network connection
+
+It runs **Ubuntu Server 24.04 LTS** and acts as both the hypervisor and
+administration point.
 
 ## Virtualization
 
-- **Stack** — KVM / QEMU / libvirt, managed with `virsh` and Cockpit.
-- **Networking** — virtual machines attach to libvirt's default NAT network.
-- **Disks** — QCOW2 images stored on the local SSD.
+- **KVM / QEMU / libvirt**
+- `virsh` and Cockpit for management
+- libvirt default NAT network
+- QCOW2 disks stored locally on SSD
 
 ## Storage
 
-- The local SSD hosts the VM disks, for I/O performance.
-- A NAS holds cold data: installation media, backups and templates.
+The local SSD holds the VM disks for better I/O performance.
+
+A NAS is used for cold data such as:
+
+- installation media
+- backups
+- templates
 
 ## Virtual machines
 
-One RHEL 9 golden image — a pristine reference kept close to a stock
-installation — is cloned into a small RHCSA topology.
+A clean **RHEL 9 golden image** is used as the reference for the lab.
+
+Linked QCOW2 clones are then created from it:
 
 ```mermaid
 graph TD
-    H["KVM host — Ubuntu Server 24.04"] --> V["KVM / QEMU / libvirt"]
-    V --> G["RHEL 9 golden image<br/>(reference)"]
-    G --> R["repo node<br/>local dnf repo, NFS, time"]
+    H["KVM host<br/>Ubuntu Server 24.04"] --> V["KVM / QEMU / libvirt"]
+    V --> G["RHEL 9 golden image<br/>reference"]
+    G --> R["repo node<br/>local DNF repo, NFS, time"]
     G --> N1["practice node 1"]
     G --> N2["practice node 2"]
 ```
 
-## Key design choices
+The golden image itself is built and maintained in:
 
-- **Golden image + linked QCOW2 clones** — minimal disk footprint, fast rebuilds.
-- **Kickstart-driven builds** — unattended, reproducible, version-controlled.
-- **Progressive automation** — Bash → systemd → Kickstart → Ansible.
-- **Security by separation** — the reference image stays pristine; hardening
-  lives in a dedicated repository.
+[rhel-golden-image](https://github.com/lxrider/rhel-golden-image)
 
-## Privacy
+## Design choices
 
-This is a public repository. Real hostnames, addresses and secrets are never
-committed — they are generalized in every published file.
+### Golden image + linked clones
+
+Keep one clean reference image and create lightweight disposable lab nodes from it.
+
+Less disk usage, faster rebuilds, less configuration drift.
+
+### Kickstart
+
+The RHEL image is installed unattended with Kickstart.
+
+The build process is reproducible and version-controlled rather than dependent
+on a manually installed VM.
+
+### Progressive automation
+
+I prefer understanding each layer before automating it.
+
+```mermaid
+flowchart TD
+    A["Manual administration"] --> B["Bash / systemd"]
+    B --> C["Kickstart"]
+    C --> D["Ansible"]
+```
+
+### Keep the reference image clean
+
+The golden image stays close to a clean RHEL installation.
+
+Hardening and configuration are applied separately so that their purpose and
+impact remain visible.
+
+## Public repository
+
+This is a public lab.
+
+Real hostnames, addresses, credentials and secrets are not committed.
+Published examples are generalized when necessary.
