@@ -72,17 +72,11 @@ on a manually installed VM.
 
 I prefer understanding each layer before automating it.
 
-```text
-manual administration
-        |
-        v
-Bash / systemd
-        |
-        v
-Kickstart
-        |
-        v
-Ansible
+```mermaid
+flowchart TD
+    A["Manual administration"] --> B["Bash / systemd"]
+    B --> C["Kickstart"]
+    C --> D["Ansible"]
 ```
 
 ### Keep the reference image clean
