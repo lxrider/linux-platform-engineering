@@ -1,36 +1,93 @@
 # Linux Platform Engineering
 
-A home lab I'm building to prepare the **Red Hat RHCSA (EX200)** and to practise
-Linux engineering the way it's done in production: automated, documented,
-reproducible.
+A hands-on Linux lab built around **KVM, RHEL 9 and automation**.
 
-This repository is the entry point. It holds the lab architecture and tracks
-progress. Work is committed as I go — including the parts that didn't work the
-first time.
+I started this project for a simple reason: I wanted an environment where I could
+work on Linux the way I like to learn it, by building things myself, understanding
+what happens underneath, breaking things occasionally, and rebuilding them better.
 
-## Why this lab
+RHCSA and RHCE provide part of the learning path, but the goal goes beyond
+certification.
 
-I have a background in industrial IT, OT infrastructure and cybersecurity. This
-lab is where I turn that experience into demonstrable Linux platform skills such as
-KVM virtualization, unattended provisioning, host hardening, etc.
+I want this lab to behave like a small infrastructure platform that can be
+rebuilt, documented, automated and progressively secured.
 
-## What exists today
+## Why this lab exists
 
-| | |
-| --- | --- |
-| **KVM host** | Ubuntu Server 24.04 LTS on a NUC-class mini-PC. KVM/QEMU/libvirt stack up; NAT network and storage pool operational. |
-| **Storage** | Local SSD for VM disks; NAS for installation media and backups, mounted on demand via `systemd.automount`. |
-| **Golden image** | RHEL 9 reference image built unattended with Kickstart, sealed with `virt-sysprep`, [published as a repo](https://github.com/lxrider/rhel-golden-image). |
-| **In progress** | Cloning the golden image into the RHCSA topology (`linux-lab`). |
+Reading documentation is useful.
 
-Details in [ARCHITECTURE.md](ARCHITECTURE.md) · progress in [ROADMAP.md](ROADMAP.md).
+Having to understand why a VM does not boot, why networking behaves differently
+than expected, or why an automated installation fails is where things become
+really interesting :)
 
-## Conventions
+This project gives me a place to experiment with:
 
-- Public repository: real hostnames, addresses and secrets are never committed —
-  values are generalized (`the KVM host`, `192.0.2.x`).
-- Documentation in English.
+- Linux system administration
+- RHEL
+- KVM, QEMU and libvirt
+- networking and storage
+- unattended provisioning
+- golden images
+- Bash
+- Ansible
+- hardening
+- automation
+- troubleshooting
 
-## License
+## Architecture
 
-[MIT](LICENSE) — © 2026 lxrider
+The lab currently runs on an x86 mini-PC with **Ubuntu Server 24.04 LTS**
+as the KVM hypervisor.
+
+```text
+Ubuntu Server 24.04 LTS
+        |
+        +-- KVM / QEMU / libvirt
+                |
+                +-- RHEL 9 golden image
+                |
+                +-- repo node
+                |
+                +-- practice node 1
+                |
+                +-- practice node 2
+```
+
+More details in [ARCHITECTURE.md](ARCHITECTURE.md).
+
+## Golden image
+
+The base RHEL image is built separately here:
+
+[rhel-golden-image](https://github.com/lxrider/rhel-golden-image)
+
+I prefer keeping image creation separate from the lab itself.
+
+The image stays clean and reproducible, while the lab is where configuration,
+experimentation and automation happen.
+
+
+## Current status
+
+| Component | Status |
+|---|---|
+| KVM host | Working |
+| RHEL 9 golden image | Working |
+| Linked clones | In progress |
+| RHCSA topology | In progress |
+| Ansible | Planned |
+| Hardening | Planned |
+
+## How I work
+
+Start from a blank page.
+
+Understand first.  
+Build it.  
+Test it.  
+Break it if necessary.  
+Fix it.  
+Document it.  
+Automate it.
+
+## Build. Break. Understand. Rebuild better.
