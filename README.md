@@ -1,4 +1,4 @@
-# Linux Platform Engineering
+# Linux Platform Engineering 🐧
 
 A hands-on Linux lab built around **KVM, RHEL 9 and automation**.
 
